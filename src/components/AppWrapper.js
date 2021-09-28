@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import Login2 from "./login/Login2";
+import Login from "./login/Login";
 import Dashboard from "./dashboard/Dashboard";
 import { UserContext } from "../contexts/UserContext";
 import EventContextProvider from "../contexts/EventContext";
@@ -12,7 +12,7 @@ const AppWrapper = () => {
           <Dashboard />
         </EventContextProvider>
       )}
-      {!user.loggedIn && <Login2 />}
+      {!user.loggedIn && <Login />}
     </>
   );
 };

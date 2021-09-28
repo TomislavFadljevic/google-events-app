@@ -1,4 +1,4 @@
-import "./App.css";
+import "bootswatch/dist/lux/bootstrap.min.css";
 import AppWrapper from "./components/AppWrapper";
 import UserContextProvider from "./contexts/UserContext";
 

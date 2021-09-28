@@ -2,14 +2,17 @@ import moment from "moment";
 import RemoveEventBtn from "./RemoveEventBtn";
 
 const Event = ({ event }) => {
-  console.log("In Event", event);
   return (
-    <tr className="table-active" key={event.id}>
+    <tr className="table-secondary" key={event.id}>
       <th>{event.summary}</th>
-      <td>{moment(event.start.dateTime).format("ll")}</td>
-      <td>{moment(event.start.dateTime).format("LT")}</td>
-      <td>{moment(event.end.dateTime).format("LT")}</td>
-      <td>
+      <td className="text-center">
+        {moment(event.start.dateTime).format("ll")}
+      </td>
+      <td className="text-center">
+        {moment(event.start.dateTime).format("LT")}
+      </td>
+      <td className="text-center">{moment(event.end.dateTime).format("LT")}</td>
+      <td className="text-center">
         <RemoveEventBtn event={event} />
       </td>
     </tr>

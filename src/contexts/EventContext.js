@@ -7,32 +7,31 @@ const EventContextProvider = (props) => {
 
   // Google Events
 
-  /**
-   *  On load, called to load the auth2 library and API client library.
-   */
-  function handleClientLoad() {
-    window.gapi.load("client:auth2", () => {
-      console.log("Client loaded!!");
-
-      window.gapi.client.init({
-        apiKey: "AIzaSyC3JqOLPmTmouQX9kBuKI0OfCYCnP1I9O4",
-        clientId:
-          "953904536832-f9n1591em77rroae9uokdp439qluifmm.apps.googleusercontent.com",
-        discoveryDocs: [
-          "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
-        ],
-        scope: "https://www.googleapis.com/auth/calendar.events",
-      });
-
-      window.gapi.client.load("calendar", "v3", () => {
-        console.log("Calendar loaded!!");
-        //   List events after calendar is loaded
-        listUpcomingEvents();
-      });
-    });
-  }
-
   useEffect(() => {
+    /**
+     *  On load, called to load the auth2 library and API client library.
+     */
+    function handleClientLoad() {
+      window.gapi.load("client:auth2", () => {
+        console.log("Client loaded!!");
+
+        window.gapi.client.init({
+          apiKey: "AIzaSyC3JqOLPmTmouQX9kBuKI0OfCYCnP1I9O4",
+          clientId:
+            "953904536832-f9n1591em77rroae9uokdp439qluifmm.apps.googleusercontent.com",
+          discoveryDocs: [
+            "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
+          ],
+          scope: "https://www.googleapis.com/auth/calendar.events",
+        });
+
+        window.gapi.client.load("calendar", "v3", () => {
+          console.log("Calendar loaded!!");
+          //   List events after calendar is loaded
+          listUpcomingEvents();
+        });
+      });
+    }
     //   On app render call
     handleClientLoad();
   }, []);
@@ -57,16 +56,16 @@ const EventContextProvider = (props) => {
   };
 
   //   Insert new event
-  const addEvent = () => {
-    var event = {
-      summary: "Awesome Event!",
-      start: {
-        dateTime: "2021-09-30T09:00:00-07:00",
-      },
-      end: {
-        dateTime: "2021-09-30T17:00:00-07:00",
-      },
-    };
+  const addEvent = (event) => {
+    // var event = {
+    //   summary: "Awesome Event!",
+    //   start: {
+    //     dateTime: "2021-09-30T09:00:00-07:00",
+    //   },
+    //   end: {
+    //     dateTime: "2021-09-30T17:00:00-07:00",
+    //   },
+    // };
 
     var request = window.gapi.client.calendar.events.insert({
       calendarId: "primary",
@@ -87,11 +86,11 @@ const EventContextProvider = (props) => {
       eventId: id,
     });
     request.execute(function (response) {
-      if (response.error || response == false) {
+      if (response.error || response === false) {
         alert("Oops, something went wrong!");
       } else {
         // Filter out deleted event from "events" array
-        const filteredEvents = events.filter((event) => event.id === id);
+        const filteredEvents = events.filter((event) => event.id !== id);
         setEvents([...filteredEvents]);
       }
     });

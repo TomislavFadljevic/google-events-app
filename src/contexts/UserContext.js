@@ -31,6 +31,9 @@ const UserContextProvider = (props) => {
       loggedIn: false,
     });
   };
+  const logoutFaliure = (res) => {
+    console.log(res);
+  };
 
   return (
     <UserContext.Provider
@@ -39,6 +42,7 @@ const UserContextProvider = (props) => {
         loginSuccess,
         loginFaliure,
         logoutSuccess,
+        logoutFaliure,
       }}
     >
       {props.children}
