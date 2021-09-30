@@ -1,0 +1,62 @@
+import { EventContext } from "../../contexts/EventContext";
+import { useContext, useState } from "react";
+import OutsideClickHandler from "react-outside-click-handler";
+import EventsFilterOption from "./EventsFilterOption";
+
+const EventsFilter = () => {
+  const { events_filter } = useContext(EventContext);
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  return (
+    <OutsideClickHandler onOutsideClick={() => setShowDropdown(false)}>
+      <li className="nav-item dropdown">
+        <span
+          className={
+            showDropdown
+              ? "nav-link dropdown-toggle show"
+              : "nav-link dropdown-toggle"
+          }
+          onClick={() => setShowDropdown(!showDropdown)}
+          data-bs-toggle="dropdown"
+          role="button"
+          aria-haspopup="true"
+          aria-expanded="true"
+        >
+          {events_filter === "today"
+            ? "Today"
+            : events_filter === "week"
+            ? "This week"
+            : "This Month"}
+        </span>
+        <div
+          className={showDropdown ? "dropdown-menu show" : "dropdown-menu"}
+          data-bs-popper="none"
+        >
+          {/* <span className="dropdown-item" data-filter="today">
+            Today
+          </span>
+          <span className="dropdown-item" data-filter="week">
+            This Week
+          </span>
+          <span className="dropdown-item" data-filter="month">
+            This Month
+          </span> */}
+          <EventsFilterOption
+            events_filter="today"
+            setShowDropdown={setShowDropdown}
+          />
+          <EventsFilterOption
+            events_filter="week"
+            setShowDropdown={setShowDropdown}
+          />
+          <EventsFilterOption
+            events_filter="month"
+            setShowDropdown={setShowDropdown}
+          />
+        </div>
+      </li>
+    </OutsideClickHandler>
+  );
+};
+
+export default EventsFilter;

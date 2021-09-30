@@ -1,9 +1,11 @@
+import moment from "moment";
 import { createContext, useState, useEffect } from "react";
 
 export const EventContext = createContext();
 
 const EventContextProvider = (props) => {
   const [events, setEvents] = useState([]);
+  const [events_filter, setEventsFilter] = useState("week");
 
   // Google Events
 
@@ -28,7 +30,7 @@ const EventContextProvider = (props) => {
         window.gapi.client.load("calendar", "v3", () => {
           console.log("Calendar loaded!!");
           //   List events after calendar is loaded
-          listUpcomingEvents();
+          listUpcomingEvents("week");
         });
       });
     }
@@ -36,15 +38,47 @@ const EventContextProvider = (props) => {
     handleClientLoad();
   }, []);
 
-  // Function called to fetch users google calendar events
-  const listUpcomingEvents = () => {
+  //
+  /**
+   * Function called to fetch users google calendar events
+   * /**
+   * @param {string} events_filter - today, week, month
+   */
+  const listUpcomingEvents = (events_filter) => {
+    // Set todays date
+    let start = new Date();
+    start.setUTCHours(0, 0, 0, 0);
+    // console.log("start:", );
+    // let end = moment(start).add("1", "days").toISOString();
+    // console.log("end:", end);
+
+    let end;
+    switch (events_filter) {
+      case "today":
+        end = moment(start).add("1", "days").toISOString();
+        break;
+      case "week":
+        end = moment(start).add("7", "days").toISOString();
+        break;
+      case "month":
+        end = moment(start).add("30", "days").toISOString();
+        break;
+      default:
+        // Default "week"
+        end = moment(start).add("1", "days").toISOString();
+        // If no events_filter passed
+        // events_filter = "week";
+        break;
+    }
+
     window.gapi.client.calendar.events
       .list({
         calendarId: "primary",
-        timeMin: new Date().toISOString(),
+        timeMin: start.toISOString(),
+        timeMax: end,
         showDeleted: false,
         singleEvents: true,
-        maxResults: 10,
+        maxResults: 100,
         orderBy: "startTime",
       })
       .then(function (response) {
@@ -52,6 +86,7 @@ const EventContextProvider = (props) => {
         console.log("Events:", events);
         // Set events
         setEvents([...events]);
+        setEventsFilter(events_filter);
       });
   };
 
@@ -73,7 +108,6 @@ const EventContextProvider = (props) => {
     });
 
     request.execute((event) => {
-      console.log(event);
       // Update events in state
       setEvents([...events, event]);
     });
@@ -97,7 +131,15 @@ const EventContextProvider = (props) => {
   };
 
   return (
-    <EventContext.Provider value={{ events, addEvent, removeEvent }}>
+    <EventContext.Provider
+      value={{
+        events,
+        events_filter,
+        addEvent,
+        removeEvent,
+        listUpcomingEvents,
+      }}
+    >
       {props.children}
     </EventContext.Provider>
   );

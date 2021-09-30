@@ -57,8 +57,15 @@ code {
   height: 30px;
   border-radius: 50%;
 }
+span.dropdown-item {
+  cursor: pointer;
+}
 
 /* Events */
+.no-events {
+  padding: 40px 0;
+  text-align: center;
+}
 .event-holder table {
   margin: 10px auto;
 }

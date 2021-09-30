@@ -8,13 +8,15 @@ const UserContextProvider = (props) => {
   // Callback function on login success (fills user obj with info)
   const loginSuccess = (response) => {
     // console.log(response);
-
-    setUser({
+    const user = {
       tokenId: response.tokenId,
       accessToken: response.accessToken,
       userProfile: { ...response.profileObj },
       loggedIn: true,
-    });
+    };
+    setUser({ ...user });
+    // Store in local storage (keeps user logged in on refresh)
+    localStorage.setItem("user", JSON.stringify({ ...user }));
   };
   // Callback function on login faliure
   const loginFaliure = (response) => {
@@ -23,13 +25,17 @@ const UserContextProvider = (props) => {
     setUser({
       loggedIn: false,
     });
+    // Store in local storage (keeps user logged in on refresh)
+    localStorage.setItem("user", JSON.stringify({ loggedIn: false }));
   };
   // Callback function on logout success
   const logoutSuccess = (res) => {
-    console.log(res);
+    // console.log(res);
     setUser({
       loggedIn: false,
     });
+    // Store in local storage (keeps user logged in on refresh)
+    localStorage.setItem("loggedIn", false);
   };
   const logoutFaliure = (res) => {
     console.log(res);

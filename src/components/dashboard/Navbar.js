@@ -5,6 +5,7 @@ import DatetimeRangePicker from "react-datetime-range-picker";
 import moment from "moment";
 import { EventContext } from "../../contexts/EventContext";
 import { GoogleLogout } from "react-google-login";
+import EventsFilter from "./EventsFilter";
 
 ReactModal.setAppElement("#root");
 
@@ -178,10 +179,11 @@ const Navbar = () => {
                 </div>
               </ReactModal>
             </li>
+            <EventsFilter />
           </ul>
           <div className="d-flex">
             <ul className="navbar-nav">
-              <li className="nav-item flexcenter">
+              <li className="flexcenter">
                 <div className="rounded-img">
                   <img
                     className="profile-img"
@@ -190,13 +192,13 @@ const Navbar = () => {
                   />
                 </div>
 
-                <a
-                  className="nav-link"
-                  href="#logout"
+                <button
+                  type="button"
+                  className="btn btn-secondary"
                   onClick={openLogoutModal}
                 >
                   {user.userProfile.givenName}
-                </a>
+                </button>
                 <ReactModal
                   isOpen={logoutModalIsOpen}
                   onRequestClose={closeLogoutModal}
