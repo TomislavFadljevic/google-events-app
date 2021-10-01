@@ -15,7 +15,7 @@ const AppWrapper = () => {
   // if (localStorage.getItem("user") !== null)
   //   user = JSON.parse(localStorage.getItem("user"));
 
-  console.log(JSON.parse(localStorage.getItem("user")));
+  // console.log(JSON.parse(localStorage.getItem("user")));
   return (
     <>
       <Router>

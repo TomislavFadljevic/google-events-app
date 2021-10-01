@@ -32,15 +32,6 @@ const EventsFilter = () => {
           className={showDropdown ? "dropdown-menu show" : "dropdown-menu"}
           data-bs-popper="none"
         >
-          {/* <span className="dropdown-item" data-filter="today">
-            Today
-          </span>
-          <span className="dropdown-item" data-filter="week">
-            This Week
-          </span>
-          <span className="dropdown-item" data-filter="month">
-            This Month
-          </span> */}
           <EventsFilterOption
             events_filter="today"
             setShowDropdown={setShowDropdown}
