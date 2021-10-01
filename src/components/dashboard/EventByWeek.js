@@ -16,6 +16,8 @@ const EventByWeek = ({
   const evDate = moment(event.start.dateTime);
   // End of week date (last day of the week)
   const wEnd = limits.weekEnd;
+  // Boolean, renderWeek
+  let renderWeek = false;
 
   useEffect(() => {
     if (renderWeekRow) setRenderWeekRow(false);
@@ -27,6 +29,14 @@ const EventByWeek = ({
       setRenderWeekRow(true);
     }
   }, []);
+
+  // let newWeekStart, newWeekEnd;
+  // if (evDate.isAfter(wEnd)) {
+  //   renderWeek = true;
+  //   newWeekStart = wEnd;
+  //   const day = wEnd.day();
+  //   newWeekEnd = wEnd.add(7 - day, "days");
+  // }
 
   // console.log("start:", limits.weekStart.toISOString());
   // console.log("end:", limits.weekEnd.toISOString());

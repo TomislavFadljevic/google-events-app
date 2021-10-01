@@ -194,7 +194,7 @@ const Navbar = () => {
 
                 <button
                   type="button"
-                  className="btn btn-secondary"
+                  className="btn btn-secondary text-muted"
                   onClick={openLogoutModal}
                 >
                   {user.userProfile.givenName}
