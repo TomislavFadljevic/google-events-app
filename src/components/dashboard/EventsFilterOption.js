@@ -1,10 +1,11 @@
 import { EventContext } from "../../contexts/EventContext";
 import { useContext } from "react";
 const EventsFilterOption = ({ events_filter, setShowDropdown }) => {
-  const { listUpcomingEvents } = useContext(EventContext);
+  const { listUpcomingEvents, setEventsFilter } = useContext(EventContext);
   const setActiveFilter = (e) => {
     const filterClicked = e.currentTarget.getAttribute("data-filter");
     listUpcomingEvents(filterClicked);
+    setEventsFilter(filterClicked);
     setShowDropdown(false);
   };
   return (
@@ -16,8 +17,8 @@ const EventsFilterOption = ({ events_filter, setShowDropdown }) => {
       {events_filter === "today"
         ? "Today"
         : events_filter === "week"
-        ? "This week"
-        : "This Month"}
+        ? "Next 7 days"
+        : "Next 30 days"}
     </span>
   );
 };

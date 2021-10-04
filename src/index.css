@@ -81,3 +81,11 @@ span.dropdown-item {
   text-align: center;
   font-weight: 600;
 }
+
+.table-hover > tbody > tr.week-start-end:hover {
+  --bs-table-accent-bg: transparent;
+  padding: 30px 24px 4px;
+}
+.table-hover > tbody > tr.week-start-end td {
+  padding: 50px 24px 4px;
+}

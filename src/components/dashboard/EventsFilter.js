@@ -25,8 +25,8 @@ const EventsFilter = () => {
           {events_filter === "today"
             ? "Today"
             : events_filter === "week"
-            ? "This week"
-            : "This Month"}
+            ? "Next 7 days"
+            : "Next 30 days"}
         </span>
         <div
           className={showDropdown ? "dropdown-menu show" : "dropdown-menu"}

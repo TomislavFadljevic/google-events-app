@@ -5,10 +5,10 @@ const EventsHeader = ({ events_filter }) => {
       heading = "Events today";
       break;
     case "week":
-      heading = "Events this week";
+      heading = "Events next 7 days";
       break;
     case "month":
-      heading = "Events this month";
+      heading = "Events next 30 days";
       break;
     default:
       heading = "List of your upcoming events";

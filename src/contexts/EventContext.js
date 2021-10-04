@@ -82,12 +82,46 @@ const EventContextProvider = (props) => {
         orderBy: "startTime",
       })
       .then(function (response) {
-        var events = response.result.items;
-        console.log("Events:", events);
         // Set events
-        setEvents([...events]);
+        let events;
+        if (events_filter === "month") {
+          events = groupByWeek(response.result.items);
+          setEvents({ ...events });
+        } else {
+          events = response.result.items;
+          setEvents([...events]);
+        }
+        console.log("Events:", events);
+
         setEventsFilter(events_filter);
       });
+  };
+
+  /**
+   * Function - group events by week on "month" view
+   * /**
+   * @param {array} events - array of event objects that are sorted by start date
+   * /**
+   *@return {array} array of weeks with events
+   */
+  const groupByWeek = (events) => {
+    return events.reduce((acc, event) => {
+      // Key is "week" number
+      let week = moment(event.start.dateTime).isoWeek();
+      // Start of that week
+      let startDate = moment("2021")
+        .add(week, "weeks")
+        .startOf("week")
+        .add(1, "day")
+        .format("YYYY-MM-DD");
+      console.log("Start of week:", startDate);
+
+      if (!acc[startDate]) {
+        acc[startDate] = [];
+      }
+      acc[startDate].push(event);
+      return acc;
+    }, {});
   };
 
   //   Insert new event
@@ -109,7 +143,9 @@ const EventContextProvider = (props) => {
 
     request.execute((event) => {
       // Update events in state
-      setEvents([...events, event]);
+      events_filter !== "month"
+        ? setEvents([...events, event])
+        : listUpcomingEvents("month");
     });
   };
 
@@ -123,9 +159,13 @@ const EventContextProvider = (props) => {
       if (response.error || response === false) {
         alert("Oops, something went wrong!");
       } else {
-        // Filter out deleted event from "events" array
-        const filteredEvents = events.filter((event) => event.id !== id);
-        setEvents([...filteredEvents]);
+        if (events_filter !== "month") {
+          // Filter out deleted event from "events" array
+          let filteredEvents = events.filter((event) => event.id !== id);
+          setEvents([...filteredEvents]);
+        } else {
+          listUpcomingEvents("month");
+        }
       }
     });
   };
@@ -138,6 +178,7 @@ const EventContextProvider = (props) => {
         addEvent,
         removeEvent,
         listUpcomingEvents,
+        setEventsFilter,
       }}
     >
       {props.children}

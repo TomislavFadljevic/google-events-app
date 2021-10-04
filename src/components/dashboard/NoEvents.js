@@ -5,10 +5,10 @@ const NoEvents = ({ events_filter }) => {
       heading = "No events today";
       break;
     case "week":
-      heading = "No events this week";
+      heading = "No events next 7 days";
       break;
     case "month":
-      heading = "No events this month";
+      heading = "No events next 30 days";
       break;
     default:
       heading = "No events";
