@@ -1,7 +1,7 @@
 import moment from "moment";
 import Event from "./Event";
 const Week = ({ week, weekStart }) => {
-  console.log("weekStart:", weekStart);
+  // console.log("weekStart:", weekStart);
   return (
     <tbody key={weekStart}>
       <tr className="table-secondary week-start-end">

@@ -4,6 +4,11 @@ import { createContext, useState, useEffect } from "react";
 export const EventContext = createContext();
 
 const EventContextProvider = (props) => {
+  // Set state from local storage.. (404 error when requesting google events !?!?)
+  // () => {
+  //   const localEvents = localStorage.getItem("events");
+  //   return localEvents ? JSON.parse(localEvents) : [];
+  // }
   const [events, setEvents] = useState([]);
   const [events_filter, setEventsFilter] = useState("week");
 
@@ -36,6 +41,7 @@ const EventContextProvider = (props) => {
     }
     //   On app render call
     handleClientLoad();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //
@@ -114,7 +120,7 @@ const EventContextProvider = (props) => {
         .startOf("week")
         .add(1, "day")
         .format("YYYY-MM-DD");
-      console.log("Start of week:", startDate);
+      // console.log("Start of week:", startDate);
 
       if (!acc[startDate]) {
         acc[startDate] = [];

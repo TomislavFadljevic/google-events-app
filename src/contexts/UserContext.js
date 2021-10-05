@@ -2,6 +2,11 @@ import { createContext, useState } from "react";
 
 export const UserContext = createContext();
 const UserContextProvider = (props) => {
+  // Set logged in user on refresh from local storage (404 error when requesting google events !?!?)
+  // () => {
+  //   const localUser = localStorage.getItem("user");
+  //   return localUser ? JSON.parse(localUser) : { loggedIn: false }
+  // }
   const [user, setUser] = useState({
     loggedIn: false,
   });
