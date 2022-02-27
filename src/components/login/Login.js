@@ -21,7 +21,7 @@ const Login = () => {
             onFailure={loginFaliure}
             cookiePolicy={"single_host_origin"}
             isSignedIn={true}
-            scope={"https://www.googleapis.com/auth/calendar.events"}
+            scope={"https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.metadata"}
           />
         </div>
       </div>
