@@ -21,16 +21,22 @@ const File = ({ file }) => {
         }
     }
     return (
-        <tr className="table-secondary" key={file.id} onClick={() => openFolder(file)}>
+        <tr className="table-secondary" key={file.id} onClick={() => openFolder(file)} style={{ cursor: isFolder ? 'pointer' : 'initial' }}>
             <td className="text-center">
                 {isFolder ? 'FolderIcon' : 'FileIcon'}
             </td>
             <th>{file.name}</th>
-            <td className="text-center">
+            <td className="text-right">
+                {!isFolder && <a href={file.webContentLink} download ><button
+                    className="btn btn-dark btn-sm"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                    }}
+                >
+                    Download
+                </button></a>}
                 <button
                     className="btn btn-danger btn-sm"
-                    key={file.id}
-                    id={file.id}
                     onClick={(e) => {
                         e.stopPropagation();
                         confirmDelete(file);

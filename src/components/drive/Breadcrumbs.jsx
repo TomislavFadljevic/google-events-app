@@ -32,8 +32,8 @@ const Breadcrumbs = () => {
         <div className='d-flex' style={{ justifyItems: 'center', alignItems: 'center', justifyContent: 'space-between', padding: '15px' }}>
             <div>
                 <ol className="breadcrumb" style={{ margin: '0' }}>
-                    {breadcrumbs.map(breadcrumb => (
-                        <li className="breadcrumb-item" key={breadcrumb.id}><span onClick={(e) => {
+                    {breadcrumbs.map((breadcrumb, i) => (
+                        <li className="breadcrumb-item" key={i} style={{ cursor: 'pointer' }}><span onClick={(e) => {
                             e.stopPropagation();
                             navigateToFolder(breadcrumb)
                         }}>{breadcrumb.folder}</span></li>

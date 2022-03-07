@@ -56,7 +56,7 @@ const UploadFileModal = ({ filesContent, fileModalOpen, setFileModalOpen }) => {
           <div className="modal-body">
             <form onSubmit={handleSubmit}>
               <div className="files">
-                {filesContent.length > 0 && <div className="file">{filesContent.name}</div>}
+                {filesContent.length > 0 && <div className="file">{filesContent[0].name}</div>}
               </div>
               <div className="modal-footer">
                 <input

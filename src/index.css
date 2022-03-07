@@ -89,3 +89,7 @@ span.dropdown-item {
 .table-hover > tbody > tr.week-start-end td {
   padding: 50px 24px 4px;
 }
+
+.text-right {
+  text-align: right;
+}

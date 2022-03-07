@@ -48,7 +48,7 @@ const FileContextProvider = (props) => {
     window.gapi.client.drive.files.list({
       'q': `'${fId}' in parents and trashed=false`,
       'pageSize': 100,
-      'fields': "nextPageToken, files(id, name, mimeType, thumbnailLink, parents)"
+      'fields': "nextPageToken, files(id, name, mimeType, thumbnailLink, parents, webContentLink, webViewLink)"
     }).then(function (response) {
       setFiles(response.result.files);
     });
@@ -76,28 +76,28 @@ const FileContextProvider = (props) => {
   }
 
   function uploadFile(fileData, parentId) {
-    var fileContent = fileData.content; // fileContent can be text, or an Uint8Array, etc.
-    var file = new Blob([fileContent], { type: "text/plain" });
+    var fileContent = fileData.content; // As a sample, upload a text file.
+    var file = new Blob([fileContent], { type: 'text/plain' });
     var metadata = {
-      "name": fileData.name,
-      "mimeType": "text/plain",
-      "parents": [`"${parentId}"`], // Google Drive folder id
+      'name': fileData.name, // Filename at Google Drive
+      'mimeType': 'text/plain', // mimeType at Google Drive
+      'parents': [parentId], // Folder ID at Google Drive
     };
 
-    var accessToken = window.gapi.auth.getToken().access_token;
+    var accessToken = window.gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
     var form = new FormData();
     form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
     form.append('file', file);
 
-    fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=media", {
-      method: 'POST',
-      headers: new Headers({ 'Authorization': 'Bearer ' + accessToken }),
-      body: form,
-    }).then((res) => {
-      return res.json();
-    }).then(function (val) {
-      console.log(val);
-    });
+    var xhr = new XMLHttpRequest();
+    xhr.open('post', 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id');
+    xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+    xhr.responseType = 'json';
+    xhr.onload = () => {
+      console.log(xhr.response.id); // Retrieve uploaded file ID.
+      listFiles(parentId);
+    };
+    xhr.send(form);
   }
 
   function createFolder(parentIds, folderName) {
